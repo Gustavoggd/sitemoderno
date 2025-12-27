@@ -28,7 +28,7 @@ instance/
 *.lnk
 
 # Build artifacts
-dist/
+# dist/
 build/
 *.egg-info/
 
