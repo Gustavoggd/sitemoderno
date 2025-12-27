@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enio Tv alternativa</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="logo" onclick="onLogoClick(this)">
+        </div>
+        <button class="menu-toggle" aria-expanded="false" aria-label="Abrir menu">☰</button>
+        <nav>
+           <a href="{{ url_for('index') }}">Início</a>
+           <a href="{{ url_for('planos') }}">Planos</a>
+           <a href="{{ url_for('aparelhos') }}">Aparelhos</a>
+           <a href="{{ url_for('servicos') }}">Serviços</a>
+        </nav>
+        <div id="menu-backdrop" class="menu-backdrop" onclick="toggleMenu(false)" tabindex="-1" aria-hidden="true"></div>
+    </header>
+    <main>
+    <div class="banner">
+            <h1>Enio Tv alternativa</h1>
+            <p>Assista aos melhores filmes e séries de TV</p>
+        </div>
+    <!-- Seção Filmes -->
+    <section class="section-filmes">
+        <div class="container">
+            <div class="filmes-text">
+                <h2>Filmes em Destaque</h2>
+                <p>Solicite já o melhor do cinema: maratonas, lançamentos e clássicos com qualidade e atualizações constantes.</p>
+                <div class="cta-group">
+                    <a class="btn-primary" href="{{ url_for('planos') }}">CONHEÇA OS NOSSOS PLANOS</a>
+                    <a class="btn-outline" href="#">TESTAR LISTA IPTV GRÁTIS</a>
+                </div>
+            </div>
+            <div class="filmes-collage">
+                <!-- Imagem base rotacionada (plano de fundo) -->
+                
+                <img src="{{ url_for('static', filename='it.jpg') }}" alt="It" onclick="abrirImagem(this)" class="c1">
+                <img src="{{ url_for('static', filename='jigsaw.webp') }}" alt="Jigsaw" onclick="abrirImagem(this)" class="c2">
+                <img src="{{ url_for('static', filename='coringa.webp') }}" alt="Coringa" onclick="abrirImagem(this)" class="c3">
+            </div>
+        </div>
+    </section>
+
+    <!-- Seção Esportes -->
+    <section class="section-esportes">
+        <div class="container">
+            <div class="esportes-visual">
+                <div class="esportes-hero">
+                    <img src="{{ url_for('static', filename='nba.webp') }}" alt="NBA" class="hero-img" onclick="abrirImagem(this)">
+                </div>
+                <div class="esportes-thumbs" aria-label="Miniaturas">
+                    <img src="{{ url_for('static', filename='nba.webp') }}" alt="NBA" onclick="setHeroImage(this)" class="thumb active">
+                    <img src="{{ url_for('static', filename='nfl.webp') }}" alt="NFL" onclick="setHeroImage(this)" class="thumb">
+                    <img src="{{ url_for('static', filename='futebol1.webp') }}" alt="Futebol" onclick="setHeroImage(this)" class="thumb">
+                    <img src="{{ url_for('static', filename='formula1.avif') }}" alt="Formula 1" onclick="setHeroImage(this)" class="thumb">
+                </div>
+            </div>
+            <div class="esportes-text">
+                <h2>Esportes ao Vivo</h2>
+                <p>Acompanhe campeonatos e partidas com transmissão estável e alta qualidade — torça sem perder nenhum lance.</p>
+                <div class="cta-group">
+                    <a class="btn-primary" href="/planos">CONHEÇA NOSSOS PLANOS</a>
+                    <a class="btn-outline" href="https://wa.me/5531993750338">CONTRATAR</a>
+                </div>
+            </div>
+        </div>
+    </section> 
+
+        <!-- Seção IPTV Atual -->
+        <section class="section-iptv" aria-labelledby="iptv-title">
+            <div class="container iptv-inner">
+                <div class="iptv-media">
+                    <img src="{{ url_for('static', filename='iptvatual.png') }}" alt="IPTV Atual" onclick="abrirImagem(this)">
+                </div>
+                <div class="iptv-text">
+                    <h2 id="iptv-title" class="main-content-title">IPTV Multiplataformas</h2>
+                    <p>Alta compatibilidade com diversos aparelhos e plataformas — funciona em Smart TVs, set‑top boxes, smartphones e computadores. Integração simples e suporte completo.</p>
+                    <div class="cta-group">
+                        <a class="btn-primary" href="{{ url_for('planos') }}">Ver Planos</a>
+                        <a class="btn-outline" href="https://wa.me/5531993750338">Contratar</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+    <div id="imagem-overlay" onclick="fecharImagem()">
+        <span class="fechar-btn" onclick="fecharImagem()">&times;</span>
+        <img id="imagem-ampliada" alt="imagem-ampliada" onclick="event.stopPropagation()">
+    </div>
+
+    <footer class="site-footer" role="contentinfo">
+        <div class="footer-inner">
+            <div class="footer-brand">
+                <img src="{{ url_for('static', filename='logo.png') }}" alt="Enio TV" class="footer-logo">
+            </div>
+            <nav class="footer-nav" aria-label="Links do rodapé">
+                <a href="{{ url_for('index') }}">Início</a>
+                <a href="{{ url_for('planos') }}">Planos</a>
+                <a href="{{ url_for('aparelhos') }}">Aparelhos</a>
+                <a href="{{ url_for('servicos') }}">Serviços</a>
+            </nav>
+            <div class="footer-contact">
+                <a href="https://wa.me/5531993750338" target="_blank" rel="noopener">WhatsApp</a>
+                <a href="mailto:contato@exemplo.com">alvesenio20@gmail.com</a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <small>© {{ current_year | default('') }} Enio TV — Todos os direitos reservados.</small>
+        </div>
+    </footer>
+    </main>
+    <script>
+        // Função para abrir a imagem no overlay
+function abrirImagem(elementoClicado) {
+    const imagemOverlay = document.getElementById('imagem-overlay');
+    const imagemAmpliada = document.getElementById('imagem-ampliada');
+
+    // Pega o caminho da imagem do atributo 'src' do elemento clicado
+    imagemAmpliada.src = elementoClicado.src;
+    
+    // Pega o texto alternativo (alt) da imagem clicada
+    imagemAmpliada.alt = elementoClicado.alt;
+
+    // Exibe o overlay usando a classe 'visible'
+    imagemOverlay.classList.add('visible'); 
+    document.body.classList.add('no-scroll');
+}
+
+// Clique no logo: no mobile redireciona ao início; no desktop abre imagem se a função existir
+function onLogoClick(el){
+    if(window.matchMedia('(max-width: 768px)').matches){
+        window.location.href = "{{ url_for('index') }}";
+    } else {
+        if(typeof abrirImagem === 'function') abrirImagem(el); else window.location.href = "{{ url_for('index') }}";
+    }
+}
+
+// Função para fechar o overlay da imagem
+function fecharImagem() {
+    const imagemOverlay = document.getElementById('imagem-overlay');
+    imagemOverlay.classList.remove('visible'); // Esconde o overlay
+    document.body.classList.remove('no-scroll');
+}
+
+// Define a imagem principal (hero) a partir da miniatura clicada
+function setHeroImage(thumb) {
+    const hero = document.querySelector('.hero-img');
+    if (!hero) return;
+    hero.src = thumb.src;
+    hero.alt = thumb.alt;
+    document.querySelectorAll('.esportes-thumbs .thumb').forEach(t => t.classList.remove('active'));
+    thumb.classList.add('active');
+}
+
+// Opcional: Adicionar a funcionalidade de fechar a imagem com a tecla ESC
+document.addEventListener('keydown', function(event) {
+    const imagemOverlay = document.getElementById('imagem-overlay');
+    // Verifica se a tecla pressionada é 'Escape' e se o overlay está visível
+    if (event.key === "Escape" && imagemOverlay.classList.contains('visible')) {
+        fecharImagem();
+    }
+});
+
+/* Ajustes dinâmicos para header + menu mobile */
+(function(){
+    function updateHeaderPadding(){
+        const header = document.querySelector('header');
+        if(!header) return;
+        document.body.style.paddingTop = header.offsetHeight + 'px';
+        document.documentElement.style.setProperty('--header-top', header.offsetHeight + 'px');
+    }
+
+    window.addEventListener('load', updateHeaderPadding);
+    window.addEventListener('resize', updateHeaderPadding);
+
+    const menuToggle = document.querySelector('.menu-toggle');
+    const nav = document.querySelector('nav');
+    const backdrop = document.getElementById('menu-backdrop');
+
+    function toggleMenu(forceOpen){
+        if(!menuToggle || !nav) return;
+        const opened = menuToggle.getAttribute('aria-expanded') === 'true';
+        const shouldOpen = (typeof forceOpen === 'boolean') ? forceOpen : !opened;
+        menuToggle.setAttribute('aria-expanded', String(shouldOpen));
+        menuToggle.classList.toggle('active', shouldOpen);
+        nav.classList.toggle('mobile-open', shouldOpen);
+        nav.setAttribute('aria-hidden', String(!shouldOpen));
+        if(backdrop) backdrop.classList.toggle('visible', shouldOpen);
+        if(shouldOpen){
+            document.body.classList.add('no-scroll');
+            nav.style.top = document.querySelector('header').offsetHeight + 'px';
+        } else {
+            document.body.classList.remove('no-scroll');
+            nav.style.top = '';
+        }
+    }
+
+    if(menuToggle){
+        menuToggle.addEventListener('click', function(){ toggleMenu(); });
+    }
+
+    if(backdrop){
+        backdrop.addEventListener('click', function(){ toggleMenu(false); });
+    }
+
+    document.querySelectorAll('nav a').forEach(a=>{
+        a.addEventListener('click', ()=>{ toggleMenu(false); });
+    });
+
+    document.addEventListener('keydown', function(e){
+        const menuOpen = menuToggle && menuToggle.getAttribute('aria-expanded') === 'true';
+        if(e.key === 'Escape' && menuOpen){ toggleMenu(false); }
+    });
+})();
+    </script>
+ </body>
+</html>

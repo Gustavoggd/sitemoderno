@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Serviços — Enio TV Alternativa</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo Enio TV Alternativa" onclick="onLogoClick(this)">
+        </div>
+        <button class="menu-toggle" aria-expanded="false" aria-label="Abrir menu">☰</button>
+        <nav>
+           <a href="{{ url_for('index') }}">Início</a>
+           <a href="{{ url_for('planos') }}">Planos</a>
+           <a href="{{ url_for('aparelhos') }}">Aparelhos</a>
+           <a href="{{ url_for('servicos') }}">Serviços</a>
+        </nav>
+        <div id="menu-backdrop" class="menu-backdrop" onclick="toggleMenu(false)" tabindex="-1" aria-hidden="true"></div>
+    </header>
+
+    <main>
+        <!-- Hero -->
+        <section class="services-hero" role="region" aria-label="Serviços Enio TV">
+            <div class="hero-inner">
+                <div class="hero-text">
+                    <h1>Atendimento e Serviços Profissionais</h1>
+                    <p>Instalação, manutenção e suporte técnico para TV via satélite e equipamentos de streaming — rápido, seguro e com garantia.</p>
+                    <div class="hero-cta">
+                        <a class="btn-assinar" href="https://wa.me/5531993750338" target="_blank" rel="noopener">Fale conosco no WhatsApp</a>
+                        <a class="btn-outline" href="{{ url_for('planos') }}">Conheça nossos planos</a>
+                    </div>
+                </div>
+                <div class="hero-media">
+                    <img src="{{ url_for('static', filename='servicos-hero.png') }}" alt="Técnico instalando equipamento" onerror="this.style.display='none'">
+                </div>
+            </div>
+        </section>
+
+        <!-- Serviços -->
+        <section class="services-list" aria-labelledby="servicos-title">
+            <h2 id="servicos-title" class="main-content-title">Nossos Serviços</h2>
+
+            <div class="services-grid" role="list">
+                <article class="service-card" role="listitem" aria-labelledby="s1">
+                    <div class="service-icon" aria-hidden="true">🔧</div>
+                    <h3 id="s1">Instalação</h3>
+                    <p>Instalação profissional de parabólicas, receptores e equipamentos para garantir sinal estável e otimizado.</p>
+                </article>
+
+                <article class="service-card" role="listitem" aria-labelledby="s2">
+                    <div class="service-icon" aria-hidden="true">🛠️</div>
+                    <h3 id="s2">Manutenção</h3>
+                    <p>Manutenção preventiva e corretiva com diagnóstico rápido para minimizar tempo de inatividade.</p>
+                </article>
+
+                <article class="service-card" role="listitem" aria-labelledby="s3">
+                    <div class="service-icon" aria-hidden="true">⚙️</div>
+                    <h3 id="s3">Atualizações</h3>
+                    <p>Atualizações de firmware e configurações para manter aparelhos compatíveis e estáveis.</p>
+                </article>
+
+                <article class="service-card" role="listitem" aria-labelledby="s4">
+                    <div class="service-icon" aria-hidden="true">📞</div>
+                    <h3 id="s4">Suporte Remoto</h3>
+                    <p>Suporte remoto ágil para ajustes, orientações e solução de problemas simples sem deslocamento.</p>
+                </article>
+            </div>
+
+            <div class="services-cta">
+                <p>Precisa de ajuda agora? Nosso suporte está pronto para atender você pelo WhatsApp.</p>
+                <a class="btn-assinar" href="https://wa.me/5531993750338" target="_blank" rel="noopener">Contratar serviço / Tirar dúvidas</a>
+            </div>
+        </section>
+
+        <!-- FAQ simples -->
+        <section class="services-faq" aria-labelledby="faq-title">
+            <h2 id="faq-title">Perguntas Frequentes</h2>
+            <details>
+                <summary>Qual o prazo de instalação?</summary>
+                <p>Normalmente agendamos em até 48 horas úteis, dependendo da localidade.</p>
+            </details>
+            <details>
+                <summary>Vocês oferecem garantia?</summary>
+                <p>Sim — oferecemos garantia de serviço por 30 dias para instalações e manutenções realizadas por nossa equipe.</p>
+            </details>
+        </section>
+
+    </main>
+
+    <footer>
+        <div class="footer-inner">
+            <small>© {{ current_year | default('') }} Enio TV — Todos os direitos reservados.</small>
+        </div>
+    </footer>
+
+    <script>
+    /* Ajustes dinâmicos para header + menu mobile */
+(function(){
+    function updateHeaderPadding(){
+        const header = document.querySelector('header');
+        if(!header) return;
+        document.body.style.paddingTop = header.offsetHeight + 'px';
+        document.documentElement.style.setProperty('--header-top', header.offsetHeight + 'px');
+    }
+
+    window.addEventListener('load', updateHeaderPadding);
+    window.addEventListener('resize', updateHeaderPadding);
+
+    // Clique no logo: no mobile redireciona ao início; no desktop abre imagem se a função existir
+    window.onLogoClick = function(el){
+        if(window.matchMedia('(max-width: 768px)').matches){
+            window.location.href = "{{ url_for('index') }}";
+        } else {
+            if(typeof abrirImagem === 'function') abrirImagem(el); else window.location.href = "{{ url_for('index') }}";
+        }
+    }
+
+    const menuToggle = document.querySelector('.menu-toggle');
+    const nav = document.querySelector('nav');
+    const backdrop = document.getElementById('menu-backdrop');
+
+    function toggleMenu(forceOpen){
+        if(!menuToggle || !nav) return;
+        const opened = menuToggle.getAttribute('aria-expanded') === 'true';
+        const shouldOpen = (typeof forceOpen === 'boolean') ? forceOpen : !opened;
+        menuToggle.setAttribute('aria-expanded', String(shouldOpen));
+        menuToggle.classList.toggle('active', shouldOpen);
+        nav.classList.toggle('mobile-open', shouldOpen);
+        nav.setAttribute('aria-hidden', String(!shouldOpen));
+        if(backdrop) backdrop.classList.toggle('visible', shouldOpen);
+        if(shouldOpen){
+            document.body.classList.add('no-scroll');
+            nav.style.top = document.querySelector('header').offsetHeight + 'px';
+        } else {
+            document.body.classList.remove('no-scroll');
+            nav.style.top = '';
+        }
+    }
+
+    if(menuToggle){
+        menuToggle.addEventListener('click', function(){ toggleMenu(); });
+    }
+
+    if(backdrop){
+        backdrop.addEventListener('click', function(){ toggleMenu(false); });
+    }
+
+    document.querySelectorAll('nav a').forEach(a=>{
+        a.addEventListener('click', ()=>{ toggleMenu(false); });
+    });
+
+    document.addEventListener('keydown', function(e){
+        const menuOpen = menuToggle && menuToggle.getAttribute('aria-expanded') === 'true';
+        if(e.key === 'Escape' && menuOpen){ toggleMenu(false); }
+    });
+})();
+    </script>
+</body>
+</html>

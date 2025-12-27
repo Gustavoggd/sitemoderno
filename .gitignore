@@ -1,0 +1,36 @@
+# Byte-compiled
+__pycache__/
+*.py[cod]
+
+# Virtual env
+venv/
+.env
+env/
+
+# IDE/editor
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs, database, instance
+*.log
+instance/
+*.sqlite3
+
+# Python bytecode and caches
+*.pyc
+
+# OneDrive local settings
+*.lnk
+
+# Build artifacts
+dist/
+build/
+*.egg-info/
+
+# Node (if any)
+node_modules/

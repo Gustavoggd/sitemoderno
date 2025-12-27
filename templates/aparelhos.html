@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Enio Tv alternativa</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="logo" onclick="onLogoClick(this)">
+        </div>
+        <button class="menu-toggle" aria-expanded="false" aria-label="Abrir menu">☰</button>
+        <nav>
+           <a href="{{ url_for('index') }}">Início</a>
+           <a href="{{ url_for('planos') }}">Planos</a>
+           <a href="{{ url_for('aparelhos') }}">Aparelhos</a>
+           <a href="{{ url_for('servicos') }}">Serviços</a>
+        </nav>
+        <div id="menu-backdrop" class="menu-backdrop" onclick="toggleMenu(false)" tabindex="-1" aria-hidden="true"></div>
+    </header>
+    <main>
+        <section class="produtos" aria-labelledby="aparelhos-title">
+            <h2 id="aparelhos-title" class="main-content-title">Aparelhos Disponíveis</h2>
+
+            <div class="produtos-grid produtos-grid--imagens">
+
+                <!-- Card: Mibosat M2 -->
+                <article class="produto product-card" aria-labelledby="produto-mibosat">
+                    <div class="card-media">
+                        <span class="badge discount">-28%</span>
+                        <img src="{{ url_for('static', filename='aparelho1.jpg') }}" alt="Mibosat M2" onclick="abrirImagem(this)">
+                    </div>
+                    <div class="card-body">
+                        <h3 id="produto-mibosat" class="product-title">Mibosat M2</h3>
+                        <p class="product-desc">Receptor compacto com alta compatibilidade</p>
+                        <ul class="produto-features">
+                            <li>TV via satélite</li>
+                            <li>Todos os canais liberados</li>
+                            <li>Imagem em HD</li>
+                        </ul>
+                        <div class="produto-actions">
+                            <a href="https://wa.me/5531993750338" target="_blank" rel="noopener" class="Assinar" aria-label="Consultar valor do Mibosat M2">Consultar Valor</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card: Uni Tv V10 -->
+                <article class="produto product-card" aria-labelledby="produto-uni">
+                    <div class="card-media">
+                        <img src="{{ url_for('static', filename='aparelho2.jpg') }}" alt="Uni Tv V10" onclick="abrirImagem(this)">
+                    </div>
+                    <div class="card-body">
+                        <h3 id="produto-uni" class="product-title">Uni Tv V10</h3>
+                        <p class="product-desc">Solução all‑in‑one para streaming</p>
+                        <ul class="produto-features">
+                            <li>Todos os serviços em um só aparelho</li>
+                            <li>Canais, filmes e séries</li>
+                            <li>Imagem HD</li>
+                        </ul>
+                        <div class="produto-actions">
+                            <a href="https://wa.me/5531993750338" target="_blank" rel="noopener" class="Assinar" aria-label="Consultar valor do Uni TV V10">Consultar Valor</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card: TouroSat Xplay -->
+                <article class="produto product-card" aria-labelledby="produto-tourosat">
+                    <div class="card-media">
+                        <span class="badge discount">-28%</span>
+                        <img src="{{ url_for('static', filename='aparelhonovo.jpeg') }}" alt="TouroSat Xplay" onclick="abrirImagem(this)">
+                    </div>
+                    <div class="card-body">
+                        
+                        <h3 id="produto-tourosat" class="product-title">TouroSat Xplay</h3>
+                        <p class="product-desc">Desempenho confiável com alta compatibilidade</p>
+                        <ul class="produto-features">
+                            <li>Todos canais liberados</li>
+                            <li>Imagem HD</li>
+                        </ul>
+                        <div class="produto-actions">
+                            <a href="https://wa.me/5531993750338" target="_blank" rel="noopener" class="Assinar" aria-label="Consultar valor do TouroSat Xplay">Consultar Valor</a>
+                        </div>
+                    </div>
+                </article>
+
+                <!-- Card: Vivencis X10 -->
+                <article class="produto product-card" aria-labelledby="produto-vivencis">
+                    <div class="card-media">
+                        <img src="{{ url_for('static', filename='antenanova.jpeg') }}" alt="Vivencis x10" onclick="abrirImagem(this)">
+                    </div>
+                    <div class="card-body">
+                        <h3 id="produto-vivencis" class="product-title">Vivencis X10</h3>
+                        <p class="product-desc">Parabólica digital com instalação simplificada </p>
+                        <ul class="produto-features">
+                            <li>+100 canais abertos</li>
+                            <li>Fácil instalação</li>
+                            <li>Imagem HD</li>
+                        </ul>
+                        <div class="produto-actions">
+                            <a href="https://wa.me/5531993750338" target="_blank" rel="noopener" class="Assinar" aria-label="Consultar valor do Vivencis X10">Consultar Valor</a>
+                        </div>
+                    </div>
+                </article>
+
+            </div> <!-- .produtos-grid -->
+        </section>
+
+    <div id="imagem-overlay" onclick="fecharImagem()">
+        <span class="fechar-btn" onclick="fecharImagem()">&times;</span>
+        <img id="imagem-ampliada" alt="imagem-ampliada" onclick="event.stopPropagation()">
+    </div>
+
+    </main>
+    <script>
+function abrirImagem(elementoClicado) {
+    const imagemOverlay = document.getElementById('imagem-overlay');
+    const imagemAmpliada = document.getElementById('imagem-ampliada');
+
+    // Define a imagem e mostra o overlay via classe para respeitar o CSS
+    imagemAmpliada.src = elementoClicado.src;
+    imagemAmpliada.alt = elementoClicado.alt;
+    imagemOverlay.classList.add('visible');
+    document.body.classList.add('no-scroll');
+}
+
+// Função para fechar o overlay da imagem
+function fecharImagem() {
+    const imagemOverlay = document.getElementById('imagem-overlay');
+    imagemOverlay.classList.remove('visible');
+    document.body.classList.remove('no-scroll');
+}
+
+// Fecha com ESC quando aberto
+document.addEventListener('keydown', function(event) {
+    const imagemOverlay = document.getElementById('imagem-overlay');
+    if (event.key === 'Escape' && imagemOverlay.classList.contains('visible')) {
+        fecharImagem();
+    }
+});
+
+// Clique no logo: no mobile redireciona ao início; no desktop abre imagem se a função existir
+window.onLogoClick = function(el){
+    if(window.matchMedia('(max-width: 768px)').matches){
+        window.location.href = "{{ url_for('index') }}";
+    } else {
+        if(typeof abrirImagem === 'function') abrirImagem(el); else window.location.href = "{{ url_for('index') }}";
+    }
+};
+
+/* Ajustes dinâmicos para header + menu mobile */
+(function(){
+    function updateHeaderPadding(){
+        const header = document.querySelector('header');
+        if(!header) return;
+        document.body.style.paddingTop = header.offsetHeight + 'px';
+        document.documentElement.style.setProperty('--header-top', header.offsetHeight + 'px');
+    }
+
+    window.addEventListener('load', updateHeaderPadding);
+    window.addEventListener('resize', updateHeaderPadding);
+
+    const menuToggle = document.querySelector('.menu-toggle');
+    const nav = document.querySelector('nav');
+    const backdrop = document.getElementById('menu-backdrop');
+
+    function toggleMenu(forceOpen){
+        if(!menuToggle || !nav) return;
+        const opened = menuToggle.getAttribute('aria-expanded') === 'true';
+        const shouldOpen = (typeof forceOpen === 'boolean') ? forceOpen : !opened;
+        menuToggle.setAttribute('aria-expanded', String(shouldOpen));
+        menuToggle.classList.toggle('active', shouldOpen);
+        nav.classList.toggle('mobile-open', shouldOpen);
+        nav.setAttribute('aria-hidden', String(!shouldOpen));
+        if(backdrop) backdrop.classList.toggle('visible', shouldOpen);
+        if(shouldOpen){
+            document.body.classList.add('no-scroll');
+            nav.style.top = document.querySelector('header').offsetHeight + 'px';
+        } else {
+            document.body.classList.remove('no-scroll');
+            nav.style.top = '';
+        }
+    }
+
+    if(menuToggle){
+        menuToggle.addEventListener('click', function(){ toggleMenu(); });
+    }
+
+    if(backdrop){
+        backdrop.addEventListener('click', function(){ toggleMenu(false); });
+    }
+
+    document.querySelectorAll('nav a').forEach(a=>{
+        a.addEventListener('click', ()=>{ toggleMenu(false); });
+    });
+
+    document.addEventListener('keydown', function(e){
+        const menuOpen = menuToggle && menuToggle.getAttribute('aria-expanded') === 'true';
+        if(e.key === 'Escape' && menuOpen){ toggleMenu(false); }
+    });
+})();
+    </script>
+</body>
+</html>

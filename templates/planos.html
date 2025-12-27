@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Planos TV Alternativa</title>
+
+ <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <header>
+        <div class="logo">
+            <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo Enio TV Alternativa" onclick="onLogoClick(this)">
+        </div>
+        <button class="menu-toggle" aria-expanded="false" aria-label="Abrir menu">☰</button>
+        <nav>
+           <a href="{{ url_for('index') }}">Início</a>
+           <a href="{{ url_for('planos') }}">Planos</a>
+           <a href="{{ url_for('aparelhos') }}">Aparelhos</a>
+           <a href="{{ url_for('servicos') }}">Serviços</a>
+           </nav>
+        <div id="menu-backdrop" class="menu-backdrop" onclick="toggleMenu(false)" tabindex="-1" aria-hidden="true"></div>
+    </header>
+
+    <main>
+        <section class="planos-section">
+            <h2>Nossos Planos</h2>
+            
+            <div class="planos-grid-container">
+                <div class="plano-card">
+                    <h3>Canais de TV</h3>
+                    <p class="preco">R$ 25,00</p>
+                    <ul>
+                        <li>+300 Canais ao vivo</li>
+                        <li>Qualidade SD/HD/FullHD</li>
+                        <li>Suporte 24/7</li>
+                        <li>Atualizações constantes</li>
+                    </ul>
+                    <button class="Assinar" onclick="window.location.href='https://wa.me/5531993750338'" target="_blank" rel="noopener noreferrer">Contratar</button>
+                </div>
+                </div>
+        </section>
+    </main>
+
+    <script>
+    /* Ajustes dinâmicos para header + menu mobile */
+(function(){
+    function updateHeaderPadding(){
+        const header = document.querySelector('header');
+        if(!header) return;
+        document.body.style.paddingTop = header.offsetHeight + 'px';
+        document.documentElement.style.setProperty('--header-top', header.offsetHeight + 'px');
+        const nav = document.querySelector('nav');
+        if(nav && nav.classList.contains('mobile-open')){
+            nav.style.top = header.offsetHeight + 'px';
+        }
+    }
+
+    window.addEventListener('load', updateHeaderPadding);
+    window.addEventListener('resize', updateHeaderPadding);
+
+    // Clique no logo: no mobile redireciona ao início; no desktop abre imagem se a função existir
+    window.onLogoClick = function(el){
+        if(window.matchMedia('(max-width: 768px)').matches){
+            window.location.href = "{{ url_for('index') }}";
+        } else {
+            if(typeof abrirImagem === 'function') abrirImagem(el); else window.location.href = "{{ url_for('index') }}";
+        }
+    }
+
+    const menuToggle = document.querySelector('.menu-toggle');
+    const nav = document.querySelector('nav');
+    const backdrop = document.getElementById('menu-backdrop');
+
+    function toggleMenu(forceOpen){
+        if(!menuToggle || !nav) return;
+        const opened = menuToggle.getAttribute('aria-expanded') === 'true';
+        const shouldOpen = (typeof forceOpen === 'boolean') ? forceOpen : !opened;
+        menuToggle.setAttribute('aria-expanded', String(shouldOpen));
+        menuToggle.classList.toggle('active', shouldOpen);
+        nav.classList.toggle('mobile-open', shouldOpen);
+        nav.setAttribute('aria-hidden', String(!shouldOpen));
+        if(backdrop) backdrop.classList.toggle('visible', shouldOpen);
+        if(shouldOpen){
+            document.body.classList.add('no-scroll');
+            nav.style.top = document.querySelector('header').offsetHeight + 'px';
+        } else {
+            document.body.classList.remove('no-scroll');
+            nav.style.top = '';
+        }
+    }
+
+    if(menuToggle){
+        menuToggle.addEventListener('click', function(){ toggleMenu(); });
+    }
+
+    if(backdrop){
+        backdrop.addEventListener('click', function(){ toggleMenu(false); });
+    }
+
+    document.querySelectorAll('nav a').forEach(a=>{
+        a.addEventListener('click', ()=>{ toggleMenu(false); });
+    });
+
+    document.addEventListener('keydown', function(e){
+        const menuOpen = menuToggle && menuToggle.getAttribute('aria-expanded') === 'true';
+        if(e.key === 'Escape' && menuOpen){ toggleMenu(false); }
+    });
+})();
+    </script>
+</body>
+</html>
